@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Header } from './components/Header'
-import { Todos } from './components/Todos'
-import { Completed } from './components/Completed'
+import { PageTodos } from './components/PageTodos'
+import { PageCompleted } from './components/PageCompleted'
 
 export const App = () => {
   return (
     <BrowserRouter>
       <Header />
       <div>
-          <Route path='/todos' component={ Todos } exact />
-          <Route path='/completed' component={ Completed } exact />
+          <Route path='/todos' component={ PageTodos } exact />
+          <Route path='/completed' component={ PageCompleted } exact />
       </div>
     </BrowserRouter>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Completed = () => {
+export const PageCompleted = () => {
   return (
     <div>
       Completed
