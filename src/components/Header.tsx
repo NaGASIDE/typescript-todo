@@ -10,7 +10,7 @@ export const Header = () => {
         <Link to='/todos' >
           <li>Задачи</li>
         </Link>
-        <Link to='/complited' >
+        <Link to='/completed' >
           <li>Выполненные задачи</li>
         </Link>
         <li>Фильтр</li>
