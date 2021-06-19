@@ -13,7 +13,7 @@ export const TodoItem: FC<TodoItemProps> = ({ todo }) => {
   const dispatch = useDispatch() 
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [value, setValue] = useState<string>(todo.title)
-  const [selectValue, setSelectValue] = useState<string>(`hold`)
+  const [selectValue, setSelectValue] = useState<string>(todo.status)
   const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)
   const SelectChangeHendler = (e:React.ChangeEvent<HTMLSelectElement>) => setSelectValue(e.target.value); dispatch(setTodoStatus({id: todo.id, status: selectValue}))
   const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => dispatch(removeTodo(todo.id))
