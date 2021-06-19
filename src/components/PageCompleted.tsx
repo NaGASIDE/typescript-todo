@@ -1,24 +1,18 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { useTypeSelector } from '../hooks/useTypeSelector'
-import { doneTodo } from '../redux/action-creators/todo'
+import { useTypedSelector } from '../hooks/useTypedSelector'
+import { TodoItem } from './TodoItem'
 
 export const PageCompleted = () => {
-  const completed = useTypeSelector(state => state.todo.todos)
-  const dispatch = useDispatch()
+
+  const todos = useTypedSelector(state => state.todo.todos)
+  console.log(todos)
+
   return (
     <div>
       {
-        completed.map(todo => (
-            <div>
-              {todo.completed === true ? 
-                <div> 
-                  <input type='checkbox' checked={todo.completed} 
-                         onClick={() => dispatch(doneTodo(todo.id - 1))} /> 
-                    {todo.title} 
-               </div> : ``
-              }
-            </div>
+        todos.map(todo => ( todo.completed === true ? 
+              <TodoItem key={todo.id} todo={todo} />  
+            : ``
           )
         )
       }

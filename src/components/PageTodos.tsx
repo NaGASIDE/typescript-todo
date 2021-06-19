@@ -1,39 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useTypeSelector } from '../hooks/useTypeSelector'
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { addTodo } from '../redux/todoSlice';
 import { TodoItem } from './TodoItem'
-import { addTodo, fetchTodos, doneTodo } from '../redux/action-creators/todo'
 
 export const PageTodos = () => {
 
   const [value, setValue] = useState<string>(``)
-
-  const todos = useTypeSelector(state => state.todo.todos)
-  console.log(todos)
-  const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => {setValue(e.target.value)}
-  const ClickHendler = () => {
-     dispatch(addTodo(
-      {userId: 1,
-       id: todos.length + 1,
-       title: value,
-       completed: false}
-));
-    setValue(``)
-  }
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchTodos())
-  }, [])
+  const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => {setValue(e.target.value)}
+  const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (value.length >= 2) {dispatch(addTodo(value));setValue(``)}
+  } 
+   const todos = useTypedSelector(state => state.todo.todos)
+   console.log(todos)
 
   return (
     <div>    
-          <input onChange={ChangeHendler} value={value} />
-          <button onClick={ClickHendler} >add</button>
-          {todos.map(todo => (
-            <TodoItem todo={todo}  /> 
-          )
-        )
-      }
+      <input onChange={ChangeHendler} value={value} />
+      <button onClick={ClickHendler} >add</button>
+        {todos.map(todo => (
+          <TodoItem key={todo.id} todo={todo} />
+        ))}
     </div>
   )
 }

@@ -1,5 +1,12 @@
-import {applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import { rootReducer } from './reducers'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { TodoSlice } from './todoSlice'
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+const rootReducer = combineReducers({
+  todo: TodoSlice.reducer,
+})
+
+export const store = configureStore({
+  reducer: rootReducer
+})
+
+export type RootState =ReturnType<typeof rootReducer>
