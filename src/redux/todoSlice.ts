@@ -32,13 +32,14 @@ export const TodoSlice = createSlice({
       state.todos[action.payload.id].completed = !action.payload.completed
     },
     fetchTodos: (state) => {
-      state = state
+      state.loading = true
     },
     fetchTodosError: (state, action: PayloadAction<string>) => {
       state.error = action.payload
     },
     fetchTodosSuccess: (state, action:PayloadAction<IAsyncTodo[]>) => {
       state.asyncTodos = [...state.todos, ...action.payload]
+      state.loading = false
     },
     removeAsyncTodo: (state, action: PayloadAction<number>) => {
       state.asyncTodos = state.asyncTodos.filter((todo) => todo.id !== action.payload)

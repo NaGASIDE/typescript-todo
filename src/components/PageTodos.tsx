@@ -13,9 +13,16 @@ export const PageTodos: FC = () => {
   const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (value.length >= 2) {dispatch(addTodo(value));setValue(``)}
   } 
-   const todos = useTypedSelector(state => state.todo.todos)
-   const asyncTodos = useTypedSelector(state => state.todo.asyncTodos)
-   const filter = useTypedSelector(state => state.todo.filter)
+   const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
+
+
+   if (loading) {
+     return <div>Loading...</div> 
+   }
+
+   if (error) {
+    return <div>{error}</div> 
+  }
 
    if (filter === 'hold') {
     return (
