@@ -16,7 +16,6 @@ export interface ITodoState {
   asyncTodos: IAsyncTodo[];
   loading: boolean;
   error: null | string;
-  value: number;
   filter: string;
 }
 

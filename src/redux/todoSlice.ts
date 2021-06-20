@@ -4,12 +4,11 @@ import { Dispatch } from 'redux'
 import { ITodoState } from '../types/types'
 import axios from 'axios'
 
-const initialState: ITodoState = {
+export const initialState: ITodoState = {
   todos: [],
   asyncTodos: [],
   loading: false,
   error: null,
-  value: 0,
   filter: 'all'
 }
 

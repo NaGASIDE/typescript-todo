@@ -28,7 +28,7 @@ export const Header: FC = () => {
         <option value="hold">Hold</option>
         <option value="open">Open</option>
         <option value="close">Close</option>
-        <option value="in-progress">Is progress</option>
+        <option value="in-progress">In progress</option>
       </select>
       <button onClick={ClickHendler} >Загрузить туду с сервере</button>
     </div>
