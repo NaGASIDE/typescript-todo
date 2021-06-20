@@ -5,11 +5,19 @@ export interface ITodo {
   completed: boolean;  
 }
 
+export interface IAsyncTodo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 export interface ITodoState {
   todos: ITodo[];
+  asyncTodos: IAsyncTodo[];
   loading: boolean;
   error: null | string;
   value: number;
+  filter: string;
 }
 
 export interface ISetTodo {

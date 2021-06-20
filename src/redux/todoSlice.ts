@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ISetTodo, ISetTodoStatus, ISetTodoDone } from '../types/types'
-
+import { ISetTodo, ISetTodoStatus, ISetTodoDone, IAsyncTodo } from '../types/types'
+import { Dispatch } from 'redux'
 import { ITodoState } from '../types/types'
+import axios from 'axios'
 
 const initialState: ITodoState = {
   todos: [],
+  asyncTodos: [],
   loading: false,
   error: null,
-  value: 0
+  value: 0,
+  filter: 'all'
 }
 
 export const TodoSlice = createSlice({
@@ -28,9 +31,43 @@ export const TodoSlice = createSlice({
     },
     setTodoDone: (state, action: PayloadAction<ISetTodoDone>) => {
       state.todos[action.payload.id].completed = !action.payload.completed
+    },
+    fetchTodos: (state) => {
+      state = state
+    },
+    fetchTodosError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload
+    },
+    fetchTodosSuccess: (state, action:PayloadAction<IAsyncTodo[]>) => {
+      state.asyncTodos = [...state.todos, ...action.payload]
+    },
+    removeAsyncTodo: (state, action: PayloadAction<number>) => {
+      state.asyncTodos = state.asyncTodos.filter((todo) => todo.id !== action.payload)
+    },
+    setAsyncTodo: (state, action: PayloadAction<ISetTodo>) => {
+      state.asyncTodos[action.payload.id].title = action.payload.title
+    },
+    setAsyncTodoDone: (state, action: PayloadAction<ISetTodoDone>) => {
+      state.asyncTodos[action.payload.id].completed = !action.payload.completed
+    },
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.filter = action.payload
     }
   }
 })
 
 export default TodoSlice.reducer
-export const {addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone} = TodoSlice.actions
+export const {addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone, fetchTodos, fetchTodosError, fetchTodosSuccess, removeAsyncTodo, setAsyncTodo, setAsyncTodoDone, setFilter} = TodoSlice.actions
+
+export const getFetchTodos = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(TodoSlice.actions.fetchTodos)
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=10`)
+      dispatch({type:TodoSlice.actions.fetchTodosSuccess, payload: response.data})
+   } catch (e) {
+      dispatch({type: TodoSlice.actions.fetchTodosError,
+      payload: `Произошла ошибка при загрузке задач с сервера`})
+    }
+  }
+}
