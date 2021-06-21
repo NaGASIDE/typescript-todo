@@ -24,52 +24,13 @@ export const PageTodos: FC = () => {
     return <div>{error}</div> 
   }
 
-   if (filter === 'hold') {
+   if (filter !== 'all') {
     return (
     <div>    
       <input onChange={ChangeHendler} value={value} />
       <button onClick={ClickHendler} >add</button>
         {todos.map(todo => (
-          todo.status === `hold` ?
-           <TodoItem key={todo.id} todo={todo} /> : ``
-        ))}
-    </div>
-    )
-  }
-
-  if (filter === 'open') {
-    return (
-    <div>    
-      <input onChange={ChangeHendler} value={value} />
-      <button onClick={ClickHendler} >add</button>
-        {todos.map(todo => (
-          todo.status === `open` ?
-           <TodoItem key={todo.id} todo={todo} /> : ``
-        ))}
-    </div>
-    )
-  }
-
-  if (filter === 'close') {
-    return (
-    <div>    
-      <input onChange={ChangeHendler} value={value} />
-      <button onClick={ClickHendler} >add</button>
-        {todos.map(todo => (
-          todo.status === `close` ?
-           <TodoItem key={todo.id} todo={todo} /> : ``
-        ))}
-    </div>
-    )
-  }
-
-  if (filter === 'in-progress') {
-    return (
-    <div>    
-      <input onChange={ChangeHendler} value={value} />
-      <button onClick={ClickHendler} >add</button>
-        {todos.map(todo => (
-          todo.status === `in-progress` ?
+          todo.status === filter ?
            <TodoItem key={todo.id} todo={todo} /> : ``
         ))}
     </div>
@@ -83,6 +44,7 @@ return (
       {todos.map(todo => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
+      
       {asyncTodos.map(asyncTodo => (
         <AsyncTodoItem key={asyncTodo.id} asyncTodo={asyncTodo} />
       ))}`
