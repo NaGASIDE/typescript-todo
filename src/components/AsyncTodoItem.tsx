@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { removeAsyncTodo, setAsyncTodo, setAsyncTodoDone } from '../redux/todoSlice'
 import { IAsyncTodo } from '../types/types'
 
-
 interface TodoItemProps {
   asyncTodo: IAsyncTodo
 }

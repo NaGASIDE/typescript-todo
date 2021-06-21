@@ -4,6 +4,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { addTodo } from '../redux/todoSlice';
 import { TodoItem } from './TodoItem'
 import { AsyncTodoItem } from './AsyncTodoItem'
+import { loadState } from '../redux/localStorage';
 
 export const PageTodos: FC = () => {
 
@@ -14,7 +15,6 @@ export const PageTodos: FC = () => {
     if (value.length >= 2) {dispatch(addTodo(value));setValue(``)}
   } 
    const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
-
 
    if (loading) {
      return <div>Loading...</div> 
@@ -78,14 +78,14 @@ export const PageTodos: FC = () => {
 
 return (
   <div>    
-    <input onChange={ChangeHendler} value={value} />
+`    <input onChange={ChangeHendler} value={value} />
     <button onClick={ClickHendler} >add</button>
       {todos.map(todo => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
       {asyncTodos.map(asyncTodo => (
         <AsyncTodoItem key={asyncTodo.id} asyncTodo={asyncTodo} />
-      ))}
+      ))}`
   </div>
   )
 }

@@ -5,8 +5,7 @@ import { AsyncTodoItem } from './AsyncTodoItem'
 
 export const PageCompleted = () => {
 
-  const todos = useTypedSelector(state => state.todo.todos)
-  const asyncTodos = useTypedSelector(state => state.todo.asyncTodos)
+  const {todos, asyncTodos } = useTypedSelector(state => state.todo)
 
   return (
     <div>
