@@ -4,11 +4,9 @@ import { Provider } from "react-redux";
 import { App } from "./App";
 import { BrowserRouter } from 'react-router-dom';
 import { store } from "./redux/index";
-import { loadState, saveState } from "./redux/localStorage";
+import { localStorageMiddleware } from './redux/localStorageMiddleware'
 
-store.subscribe(() => {
-  saveState(store.getState());
-});
+localStorageMiddleware(store)
 
 const root = document.getElementById("root")
 

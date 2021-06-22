@@ -29,9 +29,9 @@ export const PageTodos: FC = () => {
      return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
    }
 
-   if (error) {
-    return <div>{error}</div> 
-  }
+  //  if (error) {
+  //   return <div>{error}</div> 
+  // }
 
    if (filter !== 'all') {
     return (
