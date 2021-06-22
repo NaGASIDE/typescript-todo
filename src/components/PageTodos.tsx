@@ -4,6 +4,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { addTodo } from '../redux/todoSlice';
 import { TodoItem } from './TodoItem'
 import { AsyncTodoItem } from './AsyncTodoItem'
+import { store } from '../redux/index'
 import './style.sass'
 import './style.css'
 
@@ -27,6 +28,15 @@ export const PageTodos: FC = () => {
   }
 
   const { todos, asyncTodos, error, loading, filter } = useTypedSelector(state => state.todo)
+
+  useEffect(() => {
+    store.subscribe(() => {
+      const todoData = store.getState().todo.todos;
+
+        const formatedTodoList = JSON.stringify([...todoData]);
+        localStorage.setItem("todoList", formatedTodoList);
+    });
+  }, [todos])
 
    if (loading) {
      return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
