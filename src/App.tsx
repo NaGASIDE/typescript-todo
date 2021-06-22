@@ -1,4 +1,4 @@
-import React, {FC,useEffect} from 'react';
+import React, { FC, useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Header } from './components/Header'
 import { PageTodos } from './components/PageTodos'
@@ -11,9 +11,6 @@ export const App: FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getLocalTodos())
-  })
-
-  useEffect(() => {
     dispatch(getFetchTodos())
   })
 

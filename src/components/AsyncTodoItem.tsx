@@ -13,8 +13,14 @@ export const AsyncTodoItem: FC<TodoItemProps> = ({ asyncTodo }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [value, setValue] = useState<string>(asyncTodo.title)
   const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)
-  const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => dispatch(removeAsyncTodo(asyncTodo.id))
-  const ClickDoneHendler = (e:React.MouseEvent<HTMLInputElement>) => dispatch(setAsyncTodoDone({id: asyncTodo.id - 1, completed: asyncTodo.completed}))
+  const ClickHendler = () => dispatch(removeAsyncTodo(asyncTodo.id))
+  const ClickDoneHendler = () => {
+    dispatch(setAsyncTodoDone(
+      {
+        id: asyncTodo.id - 1, 
+        completed: asyncTodo.completed
+      }
+      ))}
 
   return (
     <div>

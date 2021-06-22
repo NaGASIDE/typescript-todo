@@ -8,7 +8,10 @@ export const Header: FC = () => {
 
   const [filter, setFilterValue] = useState(`all`)
   const dispatch = useDispatch()
-  const ChangeHendler = (e: React.ChangeEvent<HTMLSelectElement>) => setFilterValue(e.target.value); dispatch(setFilter(filter))
+  const ChangeHendler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterValue(e.target.value); 
+    dispatch(setFilter(filter))
+  }
   
   return (
     <div className='header' >

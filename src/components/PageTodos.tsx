@@ -12,11 +12,10 @@ export const PageTodos: FC = () => {
   const [value, setValue] = useState<string>(``)
   const dispatch = useDispatch()
   const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => {setValue(e.target.value)}
-  const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (value.length >= 2) {
-      dispatch(addTodo({title:value,
-                        status: filter === `all` ? `hold` : filter}))
-      setValue(``)}
+  const ClickHendler = () => {if (value.length >= 2) {
+    dispatch(addTodo({title:value,
+                      status: filter === `all` ? `hold` : filter}))
+    setValue(``)}
   }
 
   const EnterHendler = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -27,7 +26,7 @@ export const PageTodos: FC = () => {
     }
   }
 
-  const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
+  const { todos, asyncTodos, error, loading, filter } = useTypedSelector(state => state.todo)
 
    if (loading) {
      return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -40,8 +39,13 @@ export const PageTodos: FC = () => {
    if (filter !== 'all') {
     return (
     <div>    
-      <input className='todo-input' placeholder='Напишите задачу' onChange={ChangeHendler} value={value} onKeyPress={EnterHendler}  />
-      <button className='add-todo' onClick={ClickHendler} >add</button>
+      <input className='todo-input' 
+             placeholder='Напишите задачу' 
+             onChange={ChangeHendler} 
+             value={value} 
+             onKeyPress={EnterHendler}  />
+      <button className='add-todo' 
+              onClick={ClickHendler} >add</button>
         {todos.map(todo => (
           todo.status === filter &&
            <TodoItem key={todo.id} todo={todo} />
@@ -52,15 +56,20 @@ export const PageTodos: FC = () => {
 
 return (
   <div>    
-`   <input className='todo-input' placeholder='Напишите задачу' onChange={ChangeHendler} value={value}  onKeyPress={EnterHendler}  />
+`   <input className='todo-input' 
+           placeholder='Напишите задачу' 
+           onChange={ChangeHendler} value={value}  
+           onKeyPress={EnterHendler}  />
     <button className='add-todo'
             onClick={ClickHendler} >add</button>
       {todos.map(todo => (
-        <TodoItem key={todo.id} todo={todo} />
+        <TodoItem key={todo.id} 
+                  todo={todo} />
       ))}
       
       {asyncTodos.map(asyncTodo => (
-        <AsyncTodoItem key={asyncTodo.id} asyncTodo={asyncTodo} />
+        <AsyncTodoItem key={asyncTodo.id} 
+                       asyncTodo={asyncTodo} />
       ))}`
   </div>
   )

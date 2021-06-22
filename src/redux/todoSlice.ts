@@ -114,7 +114,19 @@ export const TodoSlice = createSlice({
 })
 
 export default TodoSlice.reducer
-export const { addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone, fetchTodos, fetchTodosError, fetchTodosSuccess, removeAsyncTodo, setAsyncTodo, setAsyncTodoDone, setFilter, getLocalTodos} = TodoSlice.actions
+export const { addTodo, 
+               removeTodo, 
+               setTodo, 
+               setTodoStatus, 
+               setTodoDone, 
+               fetchTodos, 
+               fetchTodosError, 
+               fetchTodosSuccess, 
+               removeAsyncTodo, 
+               setAsyncTodo, 
+               setAsyncTodoDone, 
+               setFilter, 
+               getLocalTodos} = TodoSlice.actions
 
 export const getFetchTodos = () => {
   return async (dispatch: Dispatch) => {
