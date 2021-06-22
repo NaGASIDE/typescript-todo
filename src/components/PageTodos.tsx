@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { addTodo } from '../redux/todoSlice';
@@ -16,22 +16,25 @@ export const PageTodos: FC = () => {
     if (value.length >= 2) {
       dispatch(addTodo(value))
       setValue(``)}
-  } 
+  }
+
   const EnterHendler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === `Enter` && value.length >= 2) {
       dispatch(addTodo(value))
       setValue(``)
     }
   }
+
   const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
+
 
    if (loading) {
      return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
    }
 
-  //  if (error) {
-  //   return <div>{error}</div> 
-  // }
+   if (error) {
+    return <div>{error}</div> 
+  }
 
    if (filter !== 'all') {
     return (

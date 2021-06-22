@@ -4,11 +4,15 @@ import { Header } from './components/Header'
 import { PageTodos } from './components/PageTodos'
 import { PageCompleted } from './components/PageCompleted'
 import { useDispatch } from 'react-redux'
-import { getFetchTodos } from './redux/todoSlice'
+import { getFetchTodos, getLocalTodos } from './redux/todoSlice'
 
 export const App: FC = () => {
 
   const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getLocalTodos())
+  })
+
   useEffect(() => {
     dispatch(getFetchTodos())
   })

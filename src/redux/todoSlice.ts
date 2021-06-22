@@ -73,7 +73,7 @@ export const TodoSlice = createSlice({
     },
 
     fetchTodosSuccess: (state, action:PayloadAction<IAsyncTodo[]>) => {
-      state.asyncTodos = [...state.todos, ...action.payload]
+      state.asyncTodos = [...action.payload]
       state.loading = false
     },
 
@@ -100,12 +100,21 @@ export const TodoSlice = createSlice({
     
     setFilter: (state, action: PayloadAction<string>) => {
       state.filter = action.payload
+    },
+    getLocalTodos: (state) => {
+      try {
+        const localData = localStorage.getItem("todoList");
+        const formatLocalData = localData ? JSON.parse(localData) : [];
+        state.todos = [...formatLocalData]
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 })
 
 export default TodoSlice.reducer
-export const { addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone, fetchTodos, fetchTodosError, fetchTodosSuccess, removeAsyncTodo, setAsyncTodo, setAsyncTodoDone, setFilter} = TodoSlice.actions
+export const { addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone, fetchTodos, fetchTodosError, fetchTodosSuccess, removeAsyncTodo, setAsyncTodo, setAsyncTodoDone, setFilter, getLocalTodos} = TodoSlice.actions
 
 export const getFetchTodos = () => {
   return async (dispatch: Dispatch) => {

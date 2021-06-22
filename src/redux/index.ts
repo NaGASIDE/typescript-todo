@@ -9,4 +9,14 @@ export const store = configureStore({
   reducer: rootReducer
 })
 
+
+store.subscribe(() => {
+  const todoData = store.getState().todo.todos;
+
+  if (todoData.length > 0) {
+    const formatedTodoList = JSON.stringify([...todoData]);
+    localStorage.setItem("todoList", formatedTodoList);
+  }
+});
+
 export type RootState = ReturnType<typeof rootReducer>

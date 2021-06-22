@@ -4,9 +4,6 @@ import { Provider } from "react-redux";
 import { App } from "./App";
 import { BrowserRouter } from 'react-router-dom';
 import { store } from "./redux/index";
-import { localStorageMiddleware } from './redux/localStorageMiddleware'
-
-localStorageMiddleware(store)
 
 const root = document.getElementById("root")
 
