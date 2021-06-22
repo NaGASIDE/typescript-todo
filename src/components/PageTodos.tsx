@@ -4,7 +4,8 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { addTodo } from '../redux/todoSlice';
 import { TodoItem } from './TodoItem'
 import { AsyncTodoItem } from './AsyncTodoItem'
-import { loadState } from '../redux/localStorage';
+import './style.sass'
+import './style.css'
 
 export const PageTodos: FC = () => {
 
@@ -12,12 +13,20 @@ export const PageTodos: FC = () => {
   const dispatch = useDispatch()
   const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => {setValue(e.target.value)}
   const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (value.length >= 2) {dispatch(addTodo(value));setValue(``)}
+    if (value.length >= 2) {
+      dispatch(addTodo(value))
+      setValue(``)}
   } 
-   const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
+  const EnterHendler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === `Enter` && value.length >= 2) {
+      dispatch(addTodo(value))
+      setValue(``)
+    }
+  }
+  const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
 
    if (loading) {
-     return <div>Loading...</div> 
+     return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
    }
 
    if (error) {
@@ -39,8 +48,9 @@ export const PageTodos: FC = () => {
 
 return (
   <div>    
-`    <input onChange={ChangeHendler} value={value} />
-    <button onClick={ClickHendler} >add</button>
+`    <input className='todo-input' placeholder='Напишите задачу' onChange={ChangeHendler} value={value}  onKeyPress={EnterHendler}  />
+    <button className='add-todo'
+            onClick={ClickHendler} >add</button>
       {todos.map(todo => (
         <TodoItem key={todo.id} todo={todo} />
       ))}

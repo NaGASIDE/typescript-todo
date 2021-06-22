@@ -16,9 +16,6 @@ export const TodoSlice = createSlice({
   name: `todo`,
   initialState,
   reducers: {
-    hydrate:(state, action) => {
-      return action.payload
-      },
     addTodo: (state, action: PayloadAction<string>) => {
       state.todos.push({id: state.todos.length, title: action.payload, status: 'hold', completed: false})
     },
@@ -28,15 +25,42 @@ export const TodoSlice = createSlice({
     },
 
     setTodo: (state, action: PayloadAction<ISetTodo>) => {
-      state.todos[action.payload.id].title = action.payload.title
+      let index = -1
+      for (let i = 0; i < state.todos.length; i++) {
+        index++
+        if (state.todos[i].id === action.payload.id) {
+          break;
+        }
+      }
+      if (index !== -1) {
+        state.todos[index].title = action.payload.title
+      }
     },
 
     setTodoStatus: (state, action: PayloadAction<ISetTodoStatus>) => {
-      state.todos[action.payload.id].status = action.payload.status 
+      let index = -1
+      for (let i = 0; i < state.todos.length; i++) {
+        index++
+        if (state.todos[i].id === action.payload.id) {
+          break;
+        }
+      }
+      if (index !== -1) {
+        state.todos[index].status = action.payload.status
+      }
     },
 
     setTodoDone: (state, action: PayloadAction<ISetTodoDone>) => {
-      state.todos[action.payload.id].completed = !action.payload.completed
+      let index = -1
+      for (let i = 0; i < state.todos.length; i++) {
+        index++
+        if (state.todos[i].id === action.payload.id) {
+          break;
+        }
+      }
+      if (index !== -1) {
+        state.todos[index].completed = !action.payload.completed
+      }
     },
 
     fetchTodos: (state) => {
@@ -44,6 +68,7 @@ export const TodoSlice = createSlice({
     },
 
     fetchTodosError: (state, action: PayloadAction<string>) => {
+      state.loading = false
       state.error = action.payload
     },
 
@@ -57,7 +82,16 @@ export const TodoSlice = createSlice({
     },
 
     setAsyncTodo: (state, action: PayloadAction<ISetTodo>) => {
-      state.asyncTodos[action.payload.id].title = action.payload.title
+      let index = -1
+      for (let i = 0; i < state.asyncTodos.length; i++) {
+        index++
+        if (state.asyncTodos[i].id === action.payload.id) {
+          break;
+        }
+      }
+      if (index !== -1) {
+        state.asyncTodos[index].title = action.payload.title
+      }
     },
 
     setAsyncTodoDone: (state, action: PayloadAction<ISetTodoDone>) => {
@@ -71,14 +105,16 @@ export const TodoSlice = createSlice({
 })
 
 export default TodoSlice.reducer
-export const {hydrate, addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone, fetchTodos, fetchTodosError, fetchTodosSuccess, removeAsyncTodo, setAsyncTodo, setAsyncTodoDone, setFilter} = TodoSlice.actions
+export const { addTodo, removeTodo, setTodo, setTodoStatus, setTodoDone, fetchTodos, fetchTodosError, fetchTodosSuccess, removeAsyncTodo, setAsyncTodo, setAsyncTodoDone, setFilter} = TodoSlice.actions
 
 export const getFetchTodos = () => {
   return async (dispatch: Dispatch) => {
     try {
-      dispatch(TodoSlice.actions.fetchTodos)
+      dispatch(TodoSlice.actions.fetchTodos())
       const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=10`)
-      dispatch({type:TodoSlice.actions.fetchTodosSuccess, payload: response.data})
+      setTimeout(() => {
+        dispatch({type:TodoSlice.actions.fetchTodosSuccess, payload: response.data})
+      }, 2000)
    } catch (e) {
       dispatch({type: TodoSlice.actions.fetchTodosError,
       payload: `Произошла ошибка при загрузке задач с сервера`})

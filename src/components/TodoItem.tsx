@@ -24,24 +24,31 @@ export const TodoItem: FC<TodoItemProps> = ({ todo }) => {
       <input type='checkbox' 
              checked={todo.completed}
              onClick={ClickDoneHendler} />
-      {isEdit ? <input type='text' 
+      {isEdit ? <>
+        <input className='todo-title'
+                       type='text' 
                        value={value} 
-                       onChange={ChangeHendler} /> :
-            todo.title }
-      {isEdit ? <button onClick={() => {setIsEdit(!isEdit); dispatch(setTodo({id: todo.id, title: value}))}}   >
-                  setEdit
+                       onChange={ChangeHendler} />
+
+        <select className='todo-select' value={selectValue} onChange={SelectChangeHendler} >
+          <option value="hold">Hold</option>
+          <option value="open">Open</option>
+          <option value="close">Close</option>
+          <option value="in-progress">In progress</option>
+        </select>
+                </> :
+           <>
+            <input className='todo-title' type='text' disabled value={todo.title} />
+            <input className='todo-status' type='text' value={selectValue} disabled />
+           </> }
+      {isEdit ? <button className='save-button' onClick={() => {setIsEdit(!isEdit); dispatch(setTodo({id: todo.id, title: value}))}}   >
+                  Save
                 </button>
                  : 
-                <button onClick={() => setIsEdit(!isEdit)} >
+                <button className='edit-button' onClick={() => setIsEdit(!isEdit)} >
                   Edit
                 </button>}
-      <select value={selectValue} onChange={SelectChangeHendler} >
-        <option value="hold">Hold</option>
-        <option value="open">Open</option>
-        <option value="close">Close</option>
-        <option value="in-progress">In progress</option>
-      </select>
-      <button onClick={ClickHendler} >
+      <button className='delete-button' onClick={ClickHendler} >
         Delete
       </button>
     </div>

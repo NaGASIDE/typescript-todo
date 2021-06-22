@@ -21,18 +21,19 @@ export const AsyncTodoItem: FC<TodoItemProps> = ({ asyncTodo }) => {
       <input type='checkbox' 
              checked={asyncTodo.completed}
              onClick={ClickDoneHendler} />
-      {isEdit ? <input type='text' 
+      {isEdit ? <input className='async-todo-title'
+                       type='text' 
                        value={value} 
                        onChange={ChangeHendler} /> :
-                       asyncTodo.title }
-      {isEdit ? <button onClick={() => {setIsEdit(!isEdit); dispatch(setAsyncTodo({id: asyncTodo.id - 1, title: value}))}}   >
-                  setEdit
+                       <input className='async-todo-title' type='text' disabled value={asyncTodo.title} /> }
+      {isEdit ? <button className='save-button' onClick={() => {setIsEdit(!isEdit); dispatch(setAsyncTodo({id: asyncTodo.id, title: value}))}}   >
+                  Save
                 </button>
                  : 
-                <button onClick={() => setIsEdit(!isEdit)} >
+                <button className='edit-button' onClick={() => setIsEdit(!isEdit)} >
                   Edit
                 </button>}
-      <button onClick={ClickHendler} >
+      <button className='delete-button' onClick={ClickHendler} >
         Delete
       </button>
     </div>
