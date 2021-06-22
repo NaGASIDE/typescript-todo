@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ISetTodo, ISetTodoStatus, ISetTodoDone, IAsyncTodo } from '../types/types'
+import { ISetTodo, ISetTodoStatus, ISetTodoDone, IAsyncTodo, IAddTodo } from '../types/types'
 import { Dispatch } from 'redux'
 import { ITodoState } from '../types/types'
 import axios from 'axios'
@@ -16,8 +16,8 @@ export const TodoSlice = createSlice({
   name: `todo`,
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<string>) => {
-      state.todos.push({id: state.todos.length, title: action.payload, status: 'hold', completed: false})
+    addTodo: (state, action: PayloadAction<IAddTodo>) => {
+      state.todos.unshift({id: state.todos.length, title:action.payload.title, status:action.payload.status, completed: false})
     },
 
     removeTodo: (state, action: PayloadAction<number>) => {

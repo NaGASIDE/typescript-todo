@@ -14,19 +14,20 @@ export const PageTodos: FC = () => {
   const ChangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => {setValue(e.target.value)}
   const ClickHendler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (value.length >= 2) {
-      dispatch(addTodo(value))
+      dispatch(addTodo({title:value,
+                        status: filter === `all` ? `hold` : filter}))
       setValue(``)}
   }
 
   const EnterHendler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === `Enter` && value.length >= 2) {
-      dispatch(addTodo(value))
+      dispatch(addTodo({title:value,
+                        status: filter === `all` ? `hold` : filter}))
       setValue(``)
     }
   }
 
   const {todos, asyncTodos, error, loading, filter} = useTypedSelector(state => state.todo)
-
 
    if (loading) {
      return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -39,11 +40,11 @@ export const PageTodos: FC = () => {
    if (filter !== 'all') {
     return (
     <div>    
-      <input onChange={ChangeHendler} value={value} />
-      <button onClick={ClickHendler} >add</button>
+      <input className='todo-input' placeholder='Напишите задачу' onChange={ChangeHendler} value={value} onKeyPress={EnterHendler}  />
+      <button className='add-todo' onClick={ClickHendler} >add</button>
         {todos.map(todo => (
-          todo.status === filter ?
-           <TodoItem key={todo.id} todo={todo} /> : ``
+          todo.status === filter &&
+           <TodoItem key={todo.id} todo={todo} />
         ))}
     </div>
     )
@@ -51,7 +52,7 @@ export const PageTodos: FC = () => {
 
 return (
   <div>    
-`    <input className='todo-input' placeholder='Напишите задачу' onChange={ChangeHendler} value={value}  onKeyPress={EnterHendler}  />
+`   <input className='todo-input' placeholder='Напишите задачу' onChange={ChangeHendler} value={value}  onKeyPress={EnterHendler}  />
     <button className='add-todo'
             onClick={ClickHendler} >add</button>
       {todos.map(todo => (

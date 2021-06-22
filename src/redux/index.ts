@@ -13,7 +13,7 @@ export const store = configureStore({
 store.subscribe(() => {
   const todoData = store.getState().todo.todos;
 
-  if (todoData.length > 0) {
+  if (todoData.length) {
     const formatedTodoList = JSON.stringify([...todoData]);
     localStorage.setItem("todoList", formatedTodoList);
   }

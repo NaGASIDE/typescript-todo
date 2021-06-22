@@ -19,6 +19,11 @@ export interface ITodoState {
   filter: string;
 }
 
+export interface IAddTodo {
+  title: string;
+  status: string;
+}
+
 export interface ISetTodo {
   id: number;
   title: string;
