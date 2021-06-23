@@ -1,4 +1,4 @@
-import React, {FC, useState } from 'react';
+import React, {FC, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { useDispatch} from 'react-redux'
 import { setFilter } from '../redux/todoSlice';
@@ -10,8 +10,11 @@ export const Header: FC = () => {
   const dispatch = useDispatch()
   const ChangeHendler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterValue(e.target.value); 
-    dispatch(setFilter(filter))
   }
+
+  useEffect(() => {
+    dispatch(setFilter(filter))
+  }, [filter])
   
   return (
     <div className='header' >

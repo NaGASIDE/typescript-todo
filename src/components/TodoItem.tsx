@@ -19,7 +19,10 @@ export const TodoItem: FC<TodoItemProps> = ({ todo }) => {
     dispatch(setTodoStatus({id: todo.id, status: selectValue}))
   }
   const ClickHendler = () => dispatch(removeTodo(todo.id))
-  const ClickDoneHendler = () => dispatch(setTodoDone({id: todo.id, completed: todo.completed}))
+  const ClickDoneHendler = () => {
+    dispatch(setTodoDone({id: todo.id, completed: todo.completed}));
+    dispatch(setTodoStatus({id: todo.id, status: `close`}));
+  }
 
   return (
     <div>
